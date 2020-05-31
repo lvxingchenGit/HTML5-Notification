@@ -6,7 +6,7 @@
  */
 
 import { isObject, isFunction } from './tools'
-class VueWebNotify {
+export default class VueWebNotify {
     // 初始化
     constructor(title = 'test', options = {}) {
         let { showDialog, delay = 2000 } = { ...options }
@@ -15,7 +15,7 @@ class VueWebNotify {
         this.title = title
         this.options = options
         this.isGranted = '' // 授权之后是否是 ‘greanted’
-        this.notificationInstance = [] // 装消息实例的（相当于一个栈）
+        this.notificationInstance = [] // 消息实例,相当于一个栈
         this.eventObjGather = {} // 注册的事件
         this.timer = null
         this.delay = delay
@@ -71,9 +71,6 @@ class VueWebNotify {
             case 'default':
                 Notification.requestPermission().then(r => {
                     if (r === 'default') {
-                        // 如果用户一直关闭通知提示（不是点击禁止），会一直提醒用户是否开启通知提示
-                        // 但是实际在chrome测试中连续出现3次之后，将不在提示，且状态自动会设置为denied禁止状态
-                        // UC浏览器 可无限出现提示对话框
                         this.checkStatus()
                     }else this.isGranted = r})
                 break
@@ -84,7 +81,7 @@ class VueWebNotify {
                 this.isGranted = 'denied'
                 console.warn(`vueNotification wairning:
 您目前的浏览器的通知状态为denied,需要手动开启通知消息权限！
-关于开启浏览器消息通知请查看：https://blog.csdn.net/qq_42778001`)
+关于开启浏览器消息通知请查看：https://blog.csdn.net/qq_42778001/article/details/106450669`)
                 return 'denied'
         }
         return this.isGranted
@@ -125,21 +122,4 @@ class VueWebNotify {
             this.title = title
         }
     }
-    // 清除/关闭消息
-    // clearNotice() {
-    //     if (this.showDialog) return
-    //     let len = this.notificationInstance.length
-    //     if (len) {
-    //         for (let i = 0; i < len + 1; i ++) {
-    //             this.timer = setTimeout(() => {
-    //                 console.log('索引位',i + 1)
-    //                 this.notificationInstance.pop()[i + 1].close()
-    //                 clearTimeout(this.timer)
-    //             }, this.delay)
-    //         }
-    //     }
-    // }
-}
-export {
-    VueWebNotify
 }
