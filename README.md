@@ -11,7 +11,7 @@
 参数一：title 消息通知标题；  
 参数二：options 通知弹窗配置 
 
-```
+```javascript
 <script>
 // 引入
 import WebNotify from '@/components/vue-notification/vue-notification'
@@ -34,7 +34,7 @@ this.notice = new WebNotify('this is title', {
  实例方法：**isSupport()** ，检测浏览器是否支持Notification ，如果支持会判断浏览器是否同意显示消息通知，返回一个promise对象  
  参数中是一个对象support（浏览器是否支持消息通知）和isGranted（是否了开启消息通知）
 
-```
+```javascript
  // 例子
 this.notice.isSupport()  
   .then(r => {  
@@ -53,7 +53,7 @@ this.notice.isSupport()
  实例方法：**initNoticeEvent(object)**  
  注意：事件注册需在通知显示在前注册，否则无效！  
  
- ```
+ ```javascript
  // 事件注册例子
 eventRegister() {
     let userSelectObj = {
@@ -78,7 +78,7 @@ eventRegister() {
  实例方法：**noticeAgree()**  
  该方法可以调用消息通知，返回promise
  
-  ```
+  ```javascript
  // 调用消息通知
 this.notice.noticeAgree()
   .then(() => {
@@ -92,7 +92,7 @@ this.notice.noticeAgree()
  
   **6、更新消息通知：**   
  实例方法：**upDataNotification(obj)**  
- ```
+ ```javascript
  let obj = {
     title: '更新消息通知标题',  
     body: '更新消息通知正文',
@@ -102,7 +102,7 @@ this.notice.upDataNotification(obj)
  ```
  
  ### 完整的例子(vue)###
- ```
+ ```javascript
 <template>
     <div>
         <h1>桌面消息通知</h1>
